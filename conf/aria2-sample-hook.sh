@@ -7,9 +7,9 @@
 #	Blog: https://p3terx.com
 #=================================================
 
-downloadpath='/data/cloud' #Aria2下载目录
+downloadpath='/data' #Aria2下载目录
 name='no1' #配置Rclone时填写的name
-folder='/herokubt' #网盘里的文件夹，留空为整个网盘。
+folder='/' #网盘里的文件夹，留空为整个网盘。
 retry_num=3 #上传失败重试次数
 
 #=================下面不需要修改===================
