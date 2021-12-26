@@ -61,10 +61,12 @@ adduser -D -u 1000 junv \
   && mkdir /usr/local/www/aria2/Download \
   && cd /usr/local/www/aria2 \
   && chmod +rw /app/conf/aria2.session \
+  && chmod +x /app/conf/update.sh \
   && wget -N --no-check-certificate https://github.com/mayswind/AriaNg/releases/download/${ariang_version}/${ariang_file} \
   && unzip ${ariang_file} \
   && rm -rf ${ariang_file} \
   && chmod -R 755 /usr/local/www/aria2 \
   && mkdir -p /data/cloud \
+  && chmod -R 755 /data \
   && chown junv:junv /data/cloud \
   && ln -s /data/cloud /app
