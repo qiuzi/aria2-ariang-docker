@@ -4,7 +4,7 @@ sed -i 's/6800/'"${ARIA2_EXTERNAL_PORT}"'/g' /usr/local/www/aria2/js/aria-ng*.js
 RPC_SECRET_BASE64=$(echo -n ${RPC_SECRET}|base64)
 sed -i 's/secret:\"\"/secret:\"'"${RPC_SECRET_BASE64}"'\"/g' /usr/local/www/aria2/js/aria-ng*.js
 
-list=`wget -qO- https://trackerslist.com/all_aria2.txt`
+list=`wget -qO- https://trackerslist.com/all_aria2.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
 if [ -z "`grep "bt-tracker" /app/conf/aria2.conf`" ]; then
     sed -i '$a bt-tracker='${list} /app/conf/aria2.conf
     echo add......
