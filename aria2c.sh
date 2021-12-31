@@ -5,12 +5,9 @@ RPC_SECRET_BASE64=$(echo -n ${RPC_SECRET}|base64)
 sed -i 's/secret:\"\"/secret:\"'"${RPC_SECRET_BASE64}"'\"/g' /usr/local/www/aria2/js/aria-ng*.js
 
 list=`wget -qO- https://trackerslist.com/all_aria2.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
-if [ -z "`grep "bt-tracker" /app/conf/aria2.conf`" ]; then
-    sed -i '$a bt-tracker='${list} /app/conf/aria2.conf
-    echo add......
-else
-    sed -i "s@bt-tracker.*@bt-tracker=$list@g" /app/conf/aria2.conf
-    echo update......
+if [ -n "$list" ]; then
+    # 把 trackers 更新到 aria2 的配置文件中
+    sed -i "" "s@bt-tracker.*@bt-tracker=$list@g" /app/conf/aria2.conf
 fi
 
 if [ "$ARIA2_SSL" = "true" ]; then
