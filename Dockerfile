@@ -33,8 +33,10 @@ ENV CADDYPATH=/app
 ENV RCLONE_CONFIG=/app/conf/rclone.conf
 ENV XDG_DATA_HOME=/app/.caddy/data
 ENV XDG_CONFIG_HOME=/app/.caddy/config
+ENV XDG_CACHE_HOME=/app/.cache
 ENV RCLONE_CONFIG_BASE64=""
 ENV ENABLE_APP_CHECKER=true
+ENV CADDY_LOG_LEVEL=INFO
 
 ADD install.sh aria2c.sh caddy.sh Procfile init.sh start.sh rclone.sh new-version-checker.sh APP_VERSION /app/
 ADD conf /app/conf
@@ -46,13 +48,16 @@ RUN ./install.sh
 
 RUN rm ./install.sh
 
-# folder for storing ssl keys
-VOLUME /app/conf/key
+# For config files
+VOLUME /app/conf/
 
 # file downloading folder
 VOLUME /data
 
-EXPOSE 80 443
+# For rclone cache and aria2 DHT files
+VOLUME /app/.cache
+
+EXPOSE 80 443 6881
 
 HEALTHCHECK --interval=1m --timeout=3s \
   CMD curl -f http://localhost || exit 1
